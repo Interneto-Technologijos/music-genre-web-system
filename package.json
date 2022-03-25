@@ -4,7 +4,7 @@
   "description": "WEB system to provide details about music genre",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node index"
   },
   "keywords": [
@@ -14,5 +14,12 @@
     "genre"
   ],
   "author": "Mykolas",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "supertest": "^6.2.2"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
+  }
 }
