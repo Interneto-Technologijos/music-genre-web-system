@@ -1,0 +1,17 @@
+{
+  "name": "music-genre-web-system",
+  "version": "1.0.0",
+  "description": "WEB system to provide details about music genre",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "web",
+    "system",
+    "music",
+    "genre"
+  ],
+  "author": "Mykolas",
+  "license": "ISC"
+}
