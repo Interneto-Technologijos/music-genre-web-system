@@ -8,6 +8,24 @@
     <h2>Please specify Spotify track ID</h2>
     <input id="trackIdInput" type="text" />
     <button id="submitButton">Submit</button>
+    <table>
+      <thead>
+        <tr>
+          <th>Rock</th>
+          <th>Pop</th>
+          <th>RnB</th>
+          <th>EDM</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="rockTd">-%</td>
+          <td id="popTd">-%</td>
+          <td id="rnbTd">-%</td>
+          <td id="edmTd">-%</td>
+        </tr>
+      </tbody>
+    </table>
     <script>
       (function () {
         document
@@ -26,10 +44,23 @@
               alert("There was a problem getting track genre details");
               return;
             }
-            alert(httpRequest.responseText);
+            displayTrackGenreDetails(JSON.parse(httpRequest.responseText));
           };
           httpRequest.open("GET", `/track/${trackId}/genre-details`);
           httpRequest.send();
+        }
+
+        function displayTrackGenreDetails(details) {
+          document.getElementById("rockTd").innerHTML = getPercent(
+            details.rock
+          );
+          document.getElementById("popTd").innerHTML = getPercent(details.pop);
+          document.getElementById("rnbTd").innerHTML = getPercent(details.rnb);
+          document.getElementById("edmTd").innerHTML = getPercent(details.edm);
+        }
+
+        function getPercent(value) {
+          return Math.round(value * 100) + "%";
         }
       })();
     </script>
