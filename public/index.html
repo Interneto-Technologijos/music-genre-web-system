@@ -5,9 +5,33 @@
   </head>
   <body>
     <h1>What is the song genre?</h1>
-    <p>
-      Currently in progress. The idea is to allow you to choose sound track from
-      Spotify DB and get its genre.
-    </p>
+    <h2>Please specify Spotify track ID</h2>
+    <input id="trackIdInput" type="text" />
+    <button id="submitButton">Submit</button>
+    <script>
+      (function () {
+        document
+          .getElementById("submitButton")
+          .addEventListener("click", () =>
+            getTrackGenreDetails(document.getElementById("trackIdInput").value)
+          );
+
+        function getTrackGenreDetails(trackId) {
+          const httpRequest = new XMLHttpRequest();
+          httpRequest.onreadystatechange = function () {
+            if (httpRequest.readyState !== XMLHttpRequest.DONE) {
+              return;
+            }
+            if (httpRequest.status !== 200) {
+              alert("There was a problem getting track genre details");
+              return;
+            }
+            alert(httpRequest.responseText);
+          };
+          httpRequest.open("GET", `/track/${trackId}/genre-details`);
+          httpRequest.send();
+        }
+      })();
+    </script>
   </body>
 </html>
