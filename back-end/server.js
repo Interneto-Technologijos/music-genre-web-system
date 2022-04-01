@@ -8,4 +8,8 @@ require("./track/genre-details")(app);
 
 app.use("/", express.static("public"));
 
-app.listen(process.env.PORT || 3000);
+const server = app.listen(process.env.PORT || 3000);
+
+module.exports = (cb) => {
+  server.close(cb);
+};
