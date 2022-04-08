@@ -6,6 +6,24 @@ describe("Track", () => {
   afterAll((cb) => {
     server(cb);
   });
+  it("should reject shorter than 1 chars fragment", async () => {
+    const response = await request("http://localhost:3000")
+      .get("/track")
+      .expect(400);
+    expect(response.body.message).toBe("Invalid fragment");
+  });
+  it("should reject shorter than 1 chars fragment", async () => {
+    const response = await request("http://localhost:3000")
+      .get("/track?fragment=1")
+      .expect(400);
+    expect(response.body.message).toBe("Invalid fragment");
+  });
+  it("should reject longer than 20 chars fragment", async () => {
+    const response = await request("http://localhost:3000")
+      .get("/track?fragment=this is a very very very long fragment sent")
+      .expect(400);
+    expect(response.body.message).toBe("Invalid fragment");
+  });
   it("should accept text fragment and return list of tracks matching the text fragment", async () => {
     const response = await request("http://localhost:3000")
       .get("/track?fragment=nirvana")

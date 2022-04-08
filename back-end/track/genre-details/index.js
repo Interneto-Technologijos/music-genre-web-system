@@ -3,6 +3,7 @@ const net = require("./neural-network");
 
 module.exports = (app) => {
   app.get("/track/:trackId/genre-details", (req, res) => {
+    // todo: validate track id
     spotify.getAudioFeaturesByTrackId(
       req.params.trackId,
       (error, audioFeatures) => {
