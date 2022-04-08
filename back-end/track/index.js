@@ -8,7 +8,13 @@ module.exports = (app) => {
         res.status(500).send();
         return;
       }
-      res.json(tracks);
+      res.json(
+        tracks.map((track) => ({
+          id: track.id,
+          artist: track.artists[0].name,
+          title: track.name,
+        }))
+      );
     });
   });
 };
