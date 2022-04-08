@@ -4,8 +4,11 @@ const express = require("express");
 
 const app = express();
 
+app.use(express.json());
+
 require("./track")(app);
-require("./track/genre-details")(app);
+require("./track/genre/details")(app);
+require("./track/genre/suggestions")(app);
 
 app.use("/", express.static("public"));
 

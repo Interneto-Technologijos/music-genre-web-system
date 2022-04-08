@@ -1,5 +1,5 @@
-const spotify = require("../../spotify");
-const net = require("./neural-network");
+const spotify = require("../../../spotify");
+const { net } = require("./neural-network");
 
 module.exports = (app) => {
   app.get("/track/:trackId/genre-details", (req, res) => {

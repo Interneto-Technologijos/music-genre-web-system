@@ -1,5 +1,7 @@
 const brain = require("brain.js");
 
+let suggestions = [];
+
 const train = (net, details, output) => {
   net.train([
     {
@@ -77,4 +79,4 @@ train(net, weekndBlindingLights, [0, 1, 0, 0.75]);
 train(net, drakeKnifeTalk, [0, 0, 1, 0]);
 train(net, aviciiLevels, [0, 0.25, 0, 1]);
 
-module.exports = net;
+module.exports = { net, suggestions };

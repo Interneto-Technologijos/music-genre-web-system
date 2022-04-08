@@ -1,6 +1,6 @@
 const request = require("supertest");
 
-const server = require("../../server.js");
+const server = require("../../../server.js");
 
 describe("Track genre details", () => {
   afterAll((cb) => {
