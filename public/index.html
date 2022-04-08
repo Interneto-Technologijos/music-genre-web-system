@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Music genre</title>
+    <title>Song genre</title>
   </head>
   <body>
     <h1>What is the song genre?</h1>
-    <h2>Please specify Spotify track ID</h2>
-    <input id="trackIdInput" type="text" />
+    <h2>Please specify Spotify track fragment</h2>
+    <input id="fragmentInput" type="text" />
     <button id="submitButton">Submit</button>
+    <ol id="trackList"></ol>
     <table>
       <thead>
         <tr>
@@ -26,43 +27,6 @@
         </tr>
       </tbody>
     </table>
-    <script>
-      (function () {
-        document
-          .getElementById("submitButton")
-          .addEventListener("click", () =>
-            getTrackGenreDetails(document.getElementById("trackIdInput").value)
-          );
-
-        function getTrackGenreDetails(trackId) {
-          const httpRequest = new XMLHttpRequest();
-          httpRequest.onreadystatechange = function () {
-            if (httpRequest.readyState !== XMLHttpRequest.DONE) {
-              return;
-            }
-            if (httpRequest.status !== 200) {
-              alert("There was a problem getting track genre details");
-              return;
-            }
-            displayTrackGenreDetails(JSON.parse(httpRequest.responseText));
-          };
-          httpRequest.open("GET", `/track/${trackId}/genre-details`);
-          httpRequest.send();
-        }
-
-        function displayTrackGenreDetails(details) {
-          document.getElementById("rockTd").innerHTML = getPercent(
-            details.rock
-          );
-          document.getElementById("popTd").innerHTML = getPercent(details.pop);
-          document.getElementById("rnbTd").innerHTML = getPercent(details.rnb);
-          document.getElementById("edmTd").innerHTML = getPercent(details.edm);
-        }
-
-        function getPercent(value) {
-          return Math.round(value * 100) + "%";
-        }
-      })();
-    </script>
+    <script src="index.js"></script>
   </body>
 </html>
