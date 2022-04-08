@@ -46,17 +46,66 @@
         alert("There was a problem getting track genre details");
         return;
       }
-      displayTrackGenreDetails(JSON.parse(httpRequest.responseText));
+      displayTrackGenreDetails(trackId, JSON.parse(httpRequest.responseText));
     };
     httpRequest.open("GET", `/track/${trackId}/genre-details`);
     httpRequest.send();
   }
 
-  function displayTrackGenreDetails(details) {
-    document.getElementById("rockTd").innerHTML = getPercent(details.rock);
-    document.getElementById("popTd").innerHTML = getPercent(details.pop);
-    document.getElementById("rnbTd").innerHTML = getPercent(details.rnb);
-    document.getElementById("edmTd").innerHTML = getPercent(details.edm);
+  function suggestTrackGenre(trackId, details) {
+    const httpRequest = new XMLHttpRequest();
+    httpRequest.onreadystatechange = function () {
+      if (httpRequest.readyState !== XMLHttpRequest.DONE) {
+        return;
+      }
+      if (httpRequest.status !== 200) {
+        alert("There was a problem getting tracks");
+        return;
+      }
+    };
+    httpRequest.open("POST", `/track/genre/suggestion`);
+    httpRequest.setRequestHeader("Content-Type", "application/json");
+    httpRequest.send(
+      JSON.stringify({
+        trackId,
+        details,
+      })
+    );
+  }
+
+  function displayTrackGenreDetails(trackId, details) {
+    const rockAnchorElement = document.createElement("a");
+    rockAnchorElement.setAttribute("href", "#");
+    rockAnchorElement.innerHTML = getPercent(details.rock);
+    rockAnchorElement.addEventListener("click", () => {
+      suggestTrackGenre(trackId, [1, 0, 0, 0]);
+    });
+    const popAnchorElement = document.createElement("a");
+    popAnchorElement.setAttribute("href", "#");
+    popAnchorElement.innerHTML = getPercent(details.pop);
+    popAnchorElement.addEventListener("click", () => {
+      suggestTrackGenre(trackId, [0, 1, 0, 0]);
+    });
+    const rnbAnchorElement = document.createElement("a");
+    rnbAnchorElement.setAttribute("href", "#");
+    rnbAnchorElement.innerHTML = getPercent(details.rnb);
+    rnbAnchorElement.addEventListener("click", () => {
+      suggestTrackGenre(trackId, [0, 0, 1, 0]);
+    });
+    const edmAnchorElement = document.createElement("a");
+    edmAnchorElement.setAttribute("href", "#");
+    edmAnchorElement.innerHTML = getPercent(details.edm);
+    edmAnchorElement.addEventListener("click", () => {
+      suggestTrackGenre(trackId, [0, 0, 0, 1]);
+    });
+    document.getElementById("rockTd").innerHTML = "";
+    document.getElementById("rockTd").appendChild(rockAnchorElement);
+    document.getElementById("popTd").innerHTML = "";
+    document.getElementById("popTd").appendChild(popAnchorElement);
+    document.getElementById("rnbTd").innerHTML = "";
+    document.getElementById("rnbTd").appendChild(rnbAnchorElement);
+    document.getElementById("edmTd").innerHTML = "";
+    document.getElementById("edmTd").appendChild(edmAnchorElement);
   }
 
   function getPercent(value) {
