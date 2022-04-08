@@ -4,6 +4,7 @@ const express = require("express");
 
 const app = express();
 
+require("./track")(app);
 require("./track/genre-details")(app);
 
 app.use("/", express.static("public"));
