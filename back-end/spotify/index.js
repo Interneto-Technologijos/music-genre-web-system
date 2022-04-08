@@ -141,7 +141,7 @@ module.exports.searchTracksByQuery = (query, cb) => {
     });
     return;
   }
-  searchTracks(trackId, (error, tracks) => {
+  searchTracks(query, (error, tracks) => {
     if (error) {
       if (error.message === 401) {
         refreshTokenAndSearchTracks(query, (error, tracks) => {
